@@ -14,6 +14,7 @@ import LoginPage from '../../pages/LoginPage';
 import SignUpPage from '../../pages/SignUpPage';
 import CommunityPage from '../../pages/CommunityPage';
 import ProfilePage from '../../pages/ProfilePage';
+import NewDeckPage from '../../pages/NewDeckPage';
 
 export default function AppRoutes() {
   const [theme, setTheme] = usePersistedState('theme', 'light');
@@ -39,6 +40,10 @@ export default function AppRoutes() {
 
           <Route path='/' element={<ProtectedRoute isAuth={isAuth}/>}>
             <Route path='/profile' element={<ProfilePage/>}/>
+            <Route path="/decks" element={<CommunityPage/>}>
+               <Route path="novo-deck" element={<NewDeckPage/>}/>
+            </Route>
+            
             {/* <Route path="/decks/novo-deck" element={<NewDeckPage/>}/> */}
             {/* <Route path="/decks/deck/avaliativo" element={<DeckAvaliativoPage/>}/> */}
             {/* <Route path="/decks/novo-deck/avaliativo" element={<NewDeckAvaliativoPage/>}/> */}
