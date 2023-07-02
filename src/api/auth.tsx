@@ -10,13 +10,12 @@ export const sendLogin = async (email:string, password:string) => {
 
     if (response.status === 200) {
       storage.setToken(response.data.data.token);
-      storage.setUser({id: response.data.data.userid, name:response.data.data.username});
+      storage.setUser({id: response.data.data.id, name:response.data.data.name});
       return response.data.data;
     } else {
       throw response.data.message;
     }
 
-    return response.data;
   } catch (error) {
 
     throw error;

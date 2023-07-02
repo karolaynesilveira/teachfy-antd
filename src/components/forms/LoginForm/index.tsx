@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Container, Form, TextMuted } from "./styles";
 import { ReactComponent as LogoName} from "../../../assets/logo_with_name.svg";
 import { sendLogin } from '../../../api/auth';
+import { useNavigate } from 'react-router-dom';
 
 
 interface Props {
@@ -11,12 +12,15 @@ interface Props {
 const LoginForm: React.FC<Props> = ({ setIsAuth }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
   const handleLogin = async () => {
     try {
       const response = await sendLogin(email, password);
       setIsAuth(response?.token ? response?.token != '' : false);
+      // navigate('/community');
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
