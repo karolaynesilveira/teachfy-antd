@@ -9,13 +9,9 @@ export const sendLogin = async (email:string, password:string) => {
       password: password
     });
 
-    if (response.status === 200) { // não tá retornando status
-      storage.setToken(response.data.data.token);
-      storage.setUser({id: response.data.data.id, name:response.data.data.name});
-      return response.data.data;
-    } else {
-      throw response.data.message;
-    }
+    storage.setToken(response.data.token);
+    // storage.setUser({id: response.data.data.id, name:response.data.data.name});
+    return response.data.data;
 
   } catch (error) {
 

@@ -137,7 +137,6 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
   };
 
   const handleModalSubmit = () => {
-    // Aqui você pode utilizar a descrição e a quantidade informadas pelo usuário no modal
     setModalIsOpen(false);
   };
 
@@ -212,9 +211,9 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
       </form>
 
       <Modal isOpen={modalIsOpen} onRequestClose={handleCloseModal}>
-        <h2>Modal</h2>
+        <h2>Crie para mim</h2>
         <div>
-          <label htmlFor="modalDescription">Descrição:</label>
+          <label htmlFor="modalDescription">Descrição detalhada:</label>
           <input
             type="text"
             id="modalDescription"

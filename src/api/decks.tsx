@@ -1,5 +1,6 @@
 import { axios } from "../libs/axios";
 import { Card } from "../models/interfaces/Card";
+import { CardType } from "../models/types/CardType";
 
 export const getPublicDecks = async () => {
   try {
@@ -62,6 +63,30 @@ export const getMyDecks = async (userId: number) => {
     return decks;
   } catch (error) {
     console.error('Erro ao buscar os decks do usuário:', error);
+    throw error;
+  }
+};
+
+
+
+export const getDecksByAI = async (data: {
+  description: string;
+  type: CardType;
+  quantity: number;
+}) => {
+  try {
+    let tp;
+    if (data.type === 1) { //Objetiva
+      tp = 1; //tipo da pergunta usada no back
+    } else { //descritiva ou anki
+      tp = 2; //tipo da pergunta usada no back
+    }
+    const response = await axios.get(`/ask/${data.quantity}/${data.description}/${tp}`, {});
+    const cards = response.data;
+
+    return cards;
+  } catch (error) {
+    console.error('Erro ao gerar decks:', error);
     throw error;
   }
 };
