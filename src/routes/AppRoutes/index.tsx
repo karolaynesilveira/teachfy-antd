@@ -15,6 +15,7 @@ import SignUpPage from '../../pages/SignUpPage';
 import CommunityPage from '../../pages/CommunityPage';
 import ProfilePage from '../../pages/ProfilePage';
 import NewDeckPage from '../../pages/NewDeckPage';
+import DeckAnkiPage from '../../pages/DeckAnkiPage';
 
 export default function AppRoutes() {
   const [theme, setTheme] = usePersistedState('theme', 'light');
@@ -38,12 +39,14 @@ export default function AppRoutes() {
           <Route path="/login" element={<LoginPage setIsAuth={setIsAuth}/>}/>
           <Route path="/community" element={<CommunityPage/>} />
 
-          <Route path='/' element={<ProtectedRoute isAuth={isAuth}/>}>
+          {/* <Route path='/' element={<ProtectedRoute isAuth={isAuth}/>}> */}
             <Route path='/profile' element={<ProfilePage/>}/>
-            <Route path="/decks" element={<CommunityPage/>}>
-               <Route path="novo-deck" element={<NewDeckPage/>}/>
-            </Route>
-            
+
+            {/* <Route path="/new-deck" element={<NewDeckPage/>}> */}
+              <Route path="/new-deck/anki" element={<DeckAnkiPage/>}/>
+              <Route path="avaliativo" element={<NewDeckPage/>}/>
+            {/* </Route>    */}
+                     
             {/* <Route path="/decks/novo-deck" element={<NewDeckPage/>}/> */}
             {/* <Route path="/decks/deck/avaliativo" element={<DeckAvaliativoPage/>}/> */}
             {/* <Route path="/decks/novo-deck/avaliativo" element={<NewDeckAvaliativoPage/>}/> */}
@@ -54,7 +57,7 @@ export default function AppRoutes() {
             {/* <Route path="/decks/novo-deck/avaliativo/byIA" element={<NewDeckAvaliativoByIAPage/>}/> */}
             {/* <Route path="/decks/novo-deck/flashcard/byAI" element={<NewDeckFlashCardPage/>}/> */}
             {/* <Route path="*" element={<NotFound />} /> */}
-          </Route>
+          {/* </Route> */}
         </Routes>
       </Fragment>
     </ThemeProvider>

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import NavBar from "../NavBar";
 import SideBar from "../SideBar"
-import Sidebar from "../SidebarMenu/Sidebar";
 import SwitchTheme from '../SwitchTheme';
 import { Container } from './styles';
 
@@ -22,8 +21,8 @@ const Menu: React.FC<Props> = ({ isAuth, toggleTheme}) => {
 
   if (showMenu) {
     if (isAuth) {
-      // return <SideBar toggleTheme={toggleTheme}/>;
-      return <Sidebar />;
+      return <SideBar toggleTheme={toggleTheme}/>;
+      
     }
     return <NavBar toggleTheme={toggleTheme}/>;
   }

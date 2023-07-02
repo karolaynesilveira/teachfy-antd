@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { DeckTypeData } from "../../elements/DeckType/DeckTypeData";
-import { DeckTypeItem } from "../../elements/DeckType/DeckTypeItem";
+import { DeckTypeData } from "./data";
 import { Link } from "react-router-dom";
+import { DeckTypeItem } from "./interface";
 
 const NewDeckForm: FC = () => {
   return (
