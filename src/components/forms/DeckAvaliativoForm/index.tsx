@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { FormWrapper } from './styles';
-import { Question } from '../../../models/interfaces/Question';
 import { newDeck } from '../../../api/decks';
-import { Card } from '../../../models/interfaces/Card';
 import { CardType } from '../../../models/types/CardType';
+import { Question } from '../../../models/interfaces/Question';
+import { Option } from '../../../models/interfaces/Option';
+import { Card } from '../../../models/interfaces/Card';
 
 interface DeckAvaliativoFormProps {
   title: string;
@@ -13,7 +14,6 @@ interface DeckAvaliativoFormProps {
   isPublic: boolean;
   isCloneable: boolean;
 }
-
 
 export const DeckAvaliativoForm: React.FC<DeckAvaliativoFormProps> = () => {
   const [title, setTitle] = useState('');
@@ -24,28 +24,26 @@ export const DeckAvaliativoForm: React.FC<DeckAvaliativoFormProps> = () => {
   const [generateFeedback, setGenerateFeedback] = useState(false);
   const [questions, setQuestions] = useState<Question[]>([]);
 
-  const handleSave = async () => {
-    /*const userStorage = localStorage.getItem('userId');
+  const handleSave = async (event: React.FormEvent) => {
+    event.preventDefault()
     const deckData = {
-      user_id: parseInt(userStorage ? userStorage : '0'),
       folder_id: directory ? directory : 0,
       name: title,
       ispublic: isPublic ? 1 : 0,
       clonable: isCloneable ? 1 : 0,
-      type: 0,
+      type: 1,
       cards: questions.map((question) => ({
         question: question.question,
-        type: question.type === 'descriptive' ? 1 : 2,
-        options: question.options || [],
+        type: question.type === 'multipleChoice' ? 1 as CardType : 2 as CardType,
+        options: question.options ? question.options : [] as Option[],
       })),
     };
   
-    await saveDeck(deckData);*/
+    await saveDeck(deckData);
   };
   
   
   const saveDeck = async (deckData: {
-    user_id: number;
     folder_id: number;
     name: string;
     ispublic: number;
@@ -68,7 +66,6 @@ export const DeckAvaliativoForm: React.FC<DeckAvaliativoFormProps> = () => {
     setQuestions([...questions, newQuestion]);
   };
 
-  
   const deleteQuestion = (index: number) => {
     const updatedQuestions = questions.filter((_, i) => i !== index);
     setQuestions(updatedQuestions);
@@ -87,14 +84,18 @@ export const DeckAvaliativoForm: React.FC<DeckAvaliativoFormProps> = () => {
   const addOption = (index: number) => {
     const updatedQuestions = questions.map((question, i) => {
       if (i === index) {
-        const updatedOptions = question.options ? [...question.options, { description: '', isCorrect: false }] : [{ description: '', isCorrect: false }];
+        const updatedOptions = question.options
+          ? [
+              ...question.options,
+              { description: '', isCorrect: false } as Option,
+            ]
+          : [{ description: '', isCorrect: false } as Option];
         return { ...question, options: updatedOptions };
       }
       return question;
     });
     setQuestions(updatedQuestions);
   };
-  
 
   const deleteOption = (index: number, optionIndex: number) => {
     const updatedQuestions = questions.map((question, i) => {
@@ -107,6 +108,41 @@ export const DeckAvaliativoForm: React.FC<DeckAvaliativoFormProps> = () => {
     setQuestions(updatedQuestions);
   };
 
+  const handleOptionChange = (
+    index: number,
+    optionIndex: number,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const updatedQuestions = questions.map((question, i) => {
+      if (i === index && question.options) {
+        const updatedOptions = question.options.map((option, j) => {
+          if (j === optionIndex) {
+            return { ...option, description: event.target.value } as Option;
+          }
+          return option;
+        });
+        return { ...question, options: updatedOptions };
+      }
+      return question;
+    });
+    setQuestions(updatedQuestions);
+  };
+
+  const handleCorrectOptionToggle = (index: number, optionIndex: number) => {
+    const updatedQuestions = questions.map((question, i) => {
+      if (i === index && question.options) {
+        const updatedOptions = question.options.map((option, j) => {
+          if (j === optionIndex) {
+            return { ...option, isCorrect: !option.isCorrect };
+          }
+          return option;
+        });
+        return { ...question, options: updatedOptions };
+      }
+      return question;
+    });
+    setQuestions(updatedQuestions);
+  };  
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -136,37 +172,6 @@ export const DeckAvaliativoForm: React.FC<DeckAvaliativoFormProps> = () => {
     updateQuestion(index, 'answer', event.target.value);
   };
 
-  const handleOptionChange = (index: number, optionIndex: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedQuestions = questions.map((question, i) => {
-      if (i === index && question.options) {
-        const updatedOptions = question.options.map((option, j) => {
-          if (j === optionIndex) {
-            return { ...option, description: event.target.value };
-          }
-          return option;
-        });
-        return { ...question, options: updatedOptions };
-      }
-      return question;
-    });
-    setQuestions(updatedQuestions);
-  };
-
-  const handleCorrectOptionToggle = (index: number, optionIndex: number) => {
-    const updatedQuestions = questions.map((question, i) => {
-      if (i === index && question.options) {
-        const updatedOptions = question.options.map((option, j) => {
-          if (j === optionIndex) {
-            return { ...option, isCorrect: !option.isCorrect };
-          }
-          return option;
-        });
-        return { ...question, options: updatedOptions };
-      }
-      return question;
-    });
-    setQuestions(updatedQuestions);
-  };
 
   return (
     <FormWrapper>

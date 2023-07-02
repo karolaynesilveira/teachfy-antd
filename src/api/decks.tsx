@@ -13,7 +13,6 @@ export const getPublicDecks = async () => {
 
 
 export const newDeck = async (data: {
-  user_id: number;
   folder_id: number;
   name: string;
   ispublic: number;
@@ -27,16 +26,22 @@ export const newDeck = async (data: {
     if (data.folder_id) {
       formData.append('folder.id', String(data.folder_id));
     }
-    formData.append('user.id', String(data.user_id));
     formData.append('name', data.name);
     formData.append('publico', String(data.ispublic));
     formData.append('clonable', String(data.clonable));
     formData.append('feedback', String(0));
     formData.append('type', String(data.type));
-    for(let index in data.cards) {
-      formData.append(`cards[${index}].type`, String(data.cards[index].type));
-      formData.append(`cards[${index}].question`, data.cards[index].question);
-      formData.append(`cards[${index}].answer`, data.cards[index].answer!);
+    for (let card of data.cards) {
+      formData.append('cards[].type', String(card.type));
+      formData.append('cards[].question', card.question);
+      formData.append('cards[].answer', card.answer!);
+
+      if (card.options) {
+        for (let option of card.options) {
+          formData.append('cards[].options[].description', option.description);
+          formData.append('cards[].options[].isCorrect', String(option.isCorrect));
+        }
+      }
     }
 
     const response = await axios.post('decks', formData);

@@ -24,6 +24,6 @@
     "src"
   ],
   "files": [
-    "src/styles/styled.d.ts"
+    "src/styles/styled.d.ts", "./src/models/types/CardType.1.ts"
   ]
 }

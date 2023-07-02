@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { Card } from '../../../models/interfaces/Card';
 import { newDeck } from '../../../api/decks';
+import { FaMagic } from 'react-icons/fa';
+import Modal from 'react-modal';
 
 interface DeckAnkiProps {
   title: string;
@@ -22,7 +24,12 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
   const [newDescription, setDescription] = useState(description);
   const [newPublic, setPublic] = useState(isPublic);
   const [newCloneable, setCloneable] = useState(isCloneable);
-  const [cards, setCards] = useState<Card[]>([{ id: 1, type: 1, question: '', answer: '' }]);
+  const [cards, setCards] = useState<Card[]>([
+    { id: 1, type: 1, question: '', answer: '' },
+  ]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalDescription, setModalDescription] = useState('');
+  const [modalQuantity, setModalQuantity] = useState(0);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,7 +40,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
       name: newTitle,
       ispublic: isPublic ? 1 : 0,
       clonable: isCloneable ? 1 : 0,
-      type: 1,
+      type: 2,
       cards: cards,
     };
     saveDeck(deckData);
@@ -66,11 +73,18 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
 
   const handleDeleteCard = (id: number) => {
     if (cards.length > 1) {
-      const updatedCards = cards.filter((_, index) => index !== id - 1).map((card, index) => ({ ...card, id: index + 1 }));
+      const updatedCards = cards
+        .filter((_, index) => index !== id - 1)
+        .map((card, index) => ({ ...card, id: index + 1 }));
       setCards(updatedCards);
     }
   };
-  const handleUpdateCard = (id: number, position: keyof Card, value: string) => {
+
+  const handleUpdateCard = (
+    id: number,
+    position: keyof Card,
+    value: string
+  ) => {
     const updatedCards = cards.map((card) => {
       if (card.id === id) {
         return { ...card, [position]: value };
@@ -80,25 +94,54 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
     setCards(updatedCards);
   };
 
-  const handleFrontTextChange = (id: number, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFrontTextChange = (
+    id: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     handleUpdateCard(id, 'question', e.target.value);
   };
 
-  const handleBackTextChange = (id: number, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBackTextChange = (
+    id: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     handleUpdateCard(id, 'answer', e.target.value);
   };
 
   const handlePublicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPublic(e.target.checked);
   };
-  
+
   const handleCloneableChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCloneable(e.target.checked);
   };
 
-  
+  const handleCreateModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleModalDescriptionChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setModalDescription(e.target.value);
+  };
+
+  const handleModalQuantityChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setModalQuantity(Number(e.target.value));
+  };
+
+  const handleModalSubmit = () => {
+    // Aqui você pode utilizar a descrição e a quantidade informadas pelo usuário no modal
+    setModalIsOpen(false);
+  };
+
   return (
-    
     <div>
       <h2>Novo deck de flashcard</h2>
       <form onSubmit={handleSubmit}>
@@ -124,13 +167,18 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
         />
         <label htmlFor="newPublic">Deck público</label>
         <input
-        type="checkbox"
-        id="newCloneable"
-        checked={newCloneable}
-        onChange={handleCloneableChange}
+          type="checkbox"
+          id="newCloneable"
+          checked={newCloneable}
+          onChange={handleCloneableChange}
         />
         <label htmlFor="newCloneable">Permite duplicação</label>
-        <button type="button"  onClick={handleAddCard}>Adicionar Card</button>
+        <button type="button" onClick={handleCreateModal}>
+          Crie para mim <FaMagic />
+        </button>
+        <button type="button" onClick={handleAddCard}>
+          Adicionar Card
+        </button>
         <div>
           {cards.map((card) => (
             <div key={card.id}>
@@ -162,6 +210,34 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
         </div>
         <button type="submit">Salvar</button>
       </form>
+
+      <Modal isOpen={modalIsOpen} onRequestClose={handleCloseModal}>
+        <h2>Modal</h2>
+        <div>
+          <label htmlFor="modalDescription">Descrição:</label>
+          <input
+            type="text"
+            id="modalDescription"
+            value={modalDescription}
+            onChange={handleModalDescriptionChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="modalQuantity">Quantidade de cards:</label>
+          <input
+            type="number"
+            id="modalQuantity"
+            value={modalQuantity}
+            onChange={handleModalQuantityChange}
+          />
+        </div>
+        <button type="button" onClick={handleCloseModal}>
+          Fechar
+        </button>
+        <button type="button" onClick={handleModalSubmit}>
+          Confirmar
+        </button>
+      </Modal>
     </div>
   );
 };

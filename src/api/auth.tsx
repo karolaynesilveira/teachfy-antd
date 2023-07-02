@@ -1,6 +1,7 @@
 import { axios } from "../libs/axios";
 import storage from "../utils/storage";
 
+
 export const sendLogin = async (email:string, password:string) => {
   try {
     const response = await axios.post('/login', {
@@ -8,7 +9,7 @@ export const sendLogin = async (email:string, password:string) => {
       password: password
     });
 
-    if (response.status === 200) {
+    if (response.status === 200) { // não tá retornando status
       storage.setToken(response.data.data.token);
       storage.setUser({id: response.data.data.id, name:response.data.data.name});
       return response.data.data;

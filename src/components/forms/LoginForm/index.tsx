@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Container, Form, TextMuted } from "./styles";
-import { ReactComponent as LogoName} from "../../../assets/logo_with_name.svg";
+import { ReactComponent as LogoName } from "../../../assets/logo_with_name.svg";
 import { sendLogin } from '../../../api/auth';
 import { useNavigate } from 'react-router-dom';
-
 
 interface Props {
   setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,8 +16,9 @@ const LoginForm: React.FC<Props> = ({ setIsAuth }) => {
   const handleLogin = async () => {
     try {
       const response = await sendLogin(email, password);
-      setIsAuth(response?.token ? response?.token != '' : false);
-      // navigate('/community');
+      console.log(response);
+      setIsAuth(response?.token ? response?.token !== '' : false);
+      navigate('/community');
     } catch (error) {
       console.log(error);
     }
@@ -27,17 +27,19 @@ const LoginForm: React.FC<Props> = ({ setIsAuth }) => {
   return (
     <Container>
       <Form>
-        <LogoName style={{ maxWidth: '60%' }}/>
-        <input 
-          type="email" 
+        <LogoName style={{ maxWidth: '60%' }} />
+        <input
+          type="email"
           placeholder="E-mail"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}/>
-        <input 
-          type="password" 
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
           placeholder="Senha"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}/>
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <Button onClick={handleLogin}>Entrar</Button>
         <TextMuted>
           Não tem uma conta? <a href="/signup">Cadastre-se</a>
@@ -46,5 +48,5 @@ const LoginForm: React.FC<Props> = ({ setIsAuth }) => {
     </Container>
   );
 };
-  
+
 export default LoginForm;

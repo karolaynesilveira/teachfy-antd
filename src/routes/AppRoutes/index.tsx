@@ -1,6 +1,6 @@
-import { useState, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { ThemeProvider, DefaultTheme } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import ProtectedRoute from '../ProtectedRoute';
 import usePersistedState from '../../hooks/usePersistedState';
 import Menu from '../../components/elements/Menu';
@@ -33,34 +33,22 @@ export default function AppRoutes() {
     <ThemeProvider theme={currentTheme}>
       <GlobalStyle />
       <Fragment>
-        <Menu isAuth={isAuth} toggleTheme={toggleTheme}/>
+        <Menu isAuth={isAuth} toggleTheme={toggleTheme} />
         <Routes>
           <Route path="/" element={<HomePage />} />
           {/* <Route path="/about" element={<About />} /> */}
-          <Route path="/signup" element={<SignUpPage/>} />
-          <Route path="/login" element={<LoginPage setIsAuth={setIsAuth}/>}/>
-          <Route path="/community" element={<CommunityPage/>} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage setIsAuth={setIsAuth} />} />
+          <Route path="/community" element={<CommunityPage />} />
 
-          {/* <Route path='/' element={<ProtectedRoute isAuth={isAuth}/>}> */}
-            <Route path='/profile' element={<ProfilePage/>}/>
-            <Route path='/my-decks' element={<MyDecksPage/>}/>
-
-            {/* <Route path="/new-deck" element={<NewDeckPage/>}> */}
-              <Route path="/new-deck/anki" element={<DeckAnkiPage/>}/>
-              <Route path="/new-deck/avaliativo" element={<DeckAvaliativoPage/>}/>
-            {/* </Route>    */}
-                     
-            {/* <Route path="/decks/novo-deck" element={<NewDeckPage/>}/> */}
-            {/* <Route path="/decks/deck/avaliativo" element={<DeckAvaliativoPage/>}/> */}
-            {/* <Route path="/decks/novo-deck/avaliativo" element={<NewDeckAvaliativoPage/>}/> */}
-            {/* <Route path="/decks/novo-deck/flashcard" element={<NewDeckFlashCardPage/>}/> */}
-            {/* <Route path="/decks/novo-deck/flashcard/byMe" element={<NewDeckFlashCardByMePage/>}/> */}
-            {/* <Route path="/decks/meus-decks" element={<MyDecksPage/>}/>  */}
-            {/* <Route path="/decks/novo-deck/avaliativo/byMe" element={<NewDeckAvaliativoByMePage/>}/> */}
-            {/* <Route path="/decks/novo-deck/avaliativo/byIA" element={<NewDeckAvaliativoByIAPage/>}/> */}
-            {/* <Route path="/decks/novo-deck/flashcard/byAI" element={<NewDeckFlashCardPage/>}/> */}
-            {/* <Route path="*" element={<NotFound />} /> */}
-          {/* </Route> */}
+          <Route path="/" element={<ProtectedRoute isAuth={isAuth} />}>
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/my-decks" element={<MyDecksPage />} />
+            <Route path="/new-deck" element={<NewDeckPage />}>
+              <Route path="anki" element={<DeckAnkiPage />} />
+              <Route path="avaliativo" element={<DeckAvaliativoPage />} />
+            </Route>
+          </Route>
         </Routes>
       </Fragment>
     </ThemeProvider>

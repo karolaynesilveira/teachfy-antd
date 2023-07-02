@@ -1,14 +1,15 @@
-import { Navigate, Outlet } from "react-router-dom";
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
 interface Props {
-    isAuth: boolean;
+  isAuth: boolean;
 }
 
 const ProtectedRoute: React.FC<Props> = ({ isAuth }) => {
-    if (isAuth) {
-        return <Outlet />;
-    }
-    return <Navigate to="/login" />;
+  if (isAuth) {
+    return <Outlet />;
+  }
+  return <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;

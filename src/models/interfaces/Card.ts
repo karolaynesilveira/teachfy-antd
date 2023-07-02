@@ -6,5 +6,5 @@ export interface Card {
     type: CardType;
     question: string;
     answer?: string;
-    options?: Option;
+    options?: Option[];
 }
