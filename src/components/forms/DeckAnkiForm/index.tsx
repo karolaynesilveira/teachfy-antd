@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { Card } from '../../../models/interfaces/Card';
-import { newDeck } from '../../../api/decks';
+import { getDecksByAI, newDeck } from '../../../api/decks';
 import { FaMagic } from 'react-icons/fa';
 import Modal from 'react-modal';
+import { CardTypeTypeEnum } from '../../../models/enums/CardTypeEnum';
 
 interface DeckAnkiProps {
   title: string;
@@ -136,8 +137,19 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
     setModalQuantity(Number(e.target.value));
   };
 
-  const handleModalSubmit = () => {
-    setModalIsOpen(false);
+  const handleModalSubmit = async () => {
+    try {
+      const data = {
+        description: modalDescription,
+        type: 3,
+        quantity: modalQuantity,
+      };
+  
+      const cards = await getDecksByAI(data);
+      setCards(cards);
+    } catch (error) {
+      console.error('Erro ao gerar decks:', error);
+    }
   };
 
   return (

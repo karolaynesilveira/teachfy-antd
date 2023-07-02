@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Container, Form, Logo, TextMuted, TextDanger } from "./styles";
 import { createUser } from '../../../api/users';
 import { User } from '../../../models/types/User';
+import { useNavigate } from 'react-router-dom';
 
 export const SignUpForm: React.FC = () => {
   const [name, setName] = useState('');
@@ -9,6 +10,7 @@ export const SignUpForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [password_confirmation, setPasswordConfirmation] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const navigate = useNavigate();
 
 
   const validatePassword = () => {
@@ -28,6 +30,7 @@ export const SignUpForm: React.FC = () => {
     }
 
     createUser({ name: name, email: email, password: password, password_confirmation: password_confirmation } as User);
+    navigate('/');
   };
 
   const isSubmitDisabled = password !== password_confirmation || !name || !email || !password;

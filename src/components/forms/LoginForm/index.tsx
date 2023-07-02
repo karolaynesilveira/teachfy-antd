@@ -16,9 +16,8 @@ const LoginForm: React.FC<Props> = ({ setIsAuth }) => {
   const handleLogin = async () => {
     try {
       const response = await sendLogin(email, password);
-      console.log(response);
       setIsAuth(response?.token ? response?.token !== '' : false);
-      navigate('/community');
+      navigate('/');
     } catch (error) {
       console.log(error);
     }

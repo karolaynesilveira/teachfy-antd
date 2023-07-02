@@ -71,7 +71,7 @@ export const getMyDecks = async (userId: number) => {
 
 export const getDecksByAI = async (data: {
   description: string;
-  type: CardType;
+  type: number;
   quantity: number;
 }) => {
   try {
