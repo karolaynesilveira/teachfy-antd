@@ -12,12 +12,13 @@ export const getPublicDecks = async () => {
 };
 
 
-export const newDeckAnki = async (data: {
+export const newDeck = async (data: {
   user_id: number;
   folder_id: number;
   name: string;
   ispublic: number;
   clonable: number;
+  feedback?: number;
   type: number;
   cards: Card[];
 }) => {
@@ -35,7 +36,7 @@ export const newDeckAnki = async (data: {
     for(let index in data.cards) {
       formData.append(`cards[${index}].type`, String(data.cards[index].type));
       formData.append(`cards[${index}].question`, data.cards[index].question);
-      formData.append(`cards[${index}].answer`, data.cards[index].answer);
+      formData.append(`cards[${index}].answer`, data.cards[index].answer!);
     }
 
     const response = await axios.post('decks', formData);
@@ -47,6 +48,7 @@ export const newDeckAnki = async (data: {
     throw new Error('Erro ao criar deck: ' + error);
   }
 };
+
 
 export const getMyDecks = async (userId: number) => {
   try {

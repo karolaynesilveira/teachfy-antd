@@ -17,6 +17,7 @@ import ProfilePage from '../../pages/ProfilePage';
 import NewDeckPage from '../../pages/NewDeckPage';
 import DeckAnkiPage from '../../pages/DeckAnkiPage';
 import MyDecksPage from '../../pages/MyDecksPage';
+import DeckAvaliativoPage from '../../pages/DeckAvaliativoPage';
 
 export default function AppRoutes() {
   const [theme, setTheme] = usePersistedState('theme', 'light');
@@ -46,7 +47,7 @@ export default function AppRoutes() {
 
             {/* <Route path="/new-deck" element={<NewDeckPage/>}> */}
               <Route path="/new-deck/anki" element={<DeckAnkiPage/>}/>
-              <Route path="avaliativo" element={<NewDeckPage/>}/>
+              <Route path="/new-deck/avaliativo" element={<DeckAvaliativoPage/>}/>
             {/* </Route>    */}
                      
             {/* <Route path="/decks/novo-deck" element={<NewDeckPage/>}/> */}

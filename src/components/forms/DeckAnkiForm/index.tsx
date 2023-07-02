@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { Card } from '../../../models/interfaces/Card';
-import { newDeckAnki } from '../../../api/decks';
+import { newDeck } from '../../../api/decks';
 
 interface DeckAnkiProps {
   title: string;
@@ -49,7 +49,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
     cards: Card[];
   }) => {
     try {
-      const result = await newDeckAnki(deckData);
+      const result = await newDeck(deckData);
       if (result === 'success') {
         alert('Novo deck gerado com sucesso!');
       }
@@ -60,7 +60,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
 
   const handleAddCard = () => {
     const nextCardNumber = cards.length + 1;
-    const newCard: Card = { id: nextCardNumber, type: 0, question: '', answer: '' };
+    const newCard: Card = { id: nextCardNumber, type: 3, question: '', answer: '' };
     setCards([...cards, newCard]);
   };
 
@@ -70,8 +70,6 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
       setCards(updatedCards);
     }
   };
-
-  
   const handleUpdateCard = (id: number, position: keyof Card, value: string) => {
     const updatedCards = cards.map((card) => {
       if (card.id === id) {

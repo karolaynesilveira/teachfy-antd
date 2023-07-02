@@ -1,0 +1,1 @@
+export type CardType = 1 | 2 | 3;
