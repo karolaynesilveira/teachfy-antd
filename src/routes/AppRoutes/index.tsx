@@ -41,13 +41,13 @@ export default function AppRoutes() {
           <Route path="/login" element={<LoginPage isAuth={isAuth} setIsAuth={setIsAuth} />} />
           <Route path="/community" element={<CommunityPage />} />
 
-          <Route path="/" element={<ProtectedRoute isAuth={isAuth} />}>
+          {/* <Route path="/" element={<ProtectedRoute isAuth={isAuth} />}> */}
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/my-decks" element={<MyDecksPage />} />
             <Route path="/new-deck" element={<NewDeckPage/>} />
             <Route path="/new-deck/anki" element={<DeckAnkiPage />} />
             <Route path="/new-deck/avaliativo" element={<DeckAvaliativoPage />} />
-          </Route>
+          {/* </Route> */}
         </Routes>
       </Fragment>
     </ThemeProvider>

@@ -22,7 +22,6 @@ const Menu: React.FC<Props> = ({ isAuth, toggleTheme}) => {
   if (showMenu) {
     if (isAuth) {
       return <SideBar toggleTheme={toggleTheme}/>;
-      
     }
     return <NavBar toggleTheme={toggleTheme}/>;
   }
