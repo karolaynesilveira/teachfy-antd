@@ -47,3 +47,14 @@ export const newDeckAnki = async (data: {
     throw new Error('Erro ao criar deck: ' + error);
   }
 };
+
+export const getMyDecks = async (userId: number) => {
+  try {
+    const response = await axios.get(`/decks/mydecks/${userId}`, {});
+    const decks = response.data.data;
+    return decks;
+  } catch (error) {
+    console.error('Erro ao buscar os decks do usuário:', error);
+    throw error;
+  }
+};

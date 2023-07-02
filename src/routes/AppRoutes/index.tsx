@@ -16,6 +16,7 @@ import CommunityPage from '../../pages/CommunityPage';
 import ProfilePage from '../../pages/ProfilePage';
 import NewDeckPage from '../../pages/NewDeckPage';
 import DeckAnkiPage from '../../pages/DeckAnkiPage';
+import MyDecksPage from '../../pages/MyDecksPage';
 
 export default function AppRoutes() {
   const [theme, setTheme] = usePersistedState('theme', 'light');
@@ -41,6 +42,7 @@ export default function AppRoutes() {
 
           {/* <Route path='/' element={<ProtectedRoute isAuth={isAuth}/>}> */}
             <Route path='/profile' element={<ProfilePage/>}/>
+            <Route path='/my-decks' element={<MyDecksPage/>}/>
 
             {/* <Route path="/new-deck" element={<NewDeckPage/>}> */}
               <Route path="/new-deck/anki" element={<DeckAnkiPage/>}/>
