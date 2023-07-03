@@ -60,4 +60,15 @@ export default createGlobalStyle`
         background-color: ${props => props.theme.colors.input.background}!important;
     }
 
+    .card-teachfy {
+        border: 1px solid ${props => props.theme.colors.primary}!important;
+        a {
+            text-decoration: none!important;
+        }
+        .card-body {
+            color: ${props => props.theme.colors.text}!important;
+            background-color: ${props => props.theme.colors.input.background}!important;
+        }
+    }
+
 `;
