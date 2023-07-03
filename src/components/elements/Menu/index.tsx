@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import NavBar from "../NavBar";
-import SideBar from "../SideBar"
 import SwitchTheme from '../SwitchTheme';
 import { Container } from './styles';
+import Sidebar from '../SidebarMenu/Sidebar';
 
 interface Props {
   isAuth: boolean;
@@ -18,10 +18,10 @@ const Menu: React.FC<Props> = ({ isAuth, toggleTheme}) => {
   useEffect(() => {
     setShowMenu(hide.indexOf(location.pathname) < 0);
   }, [location]);
-
+  console.log(isAuth);
   if (showMenu) {
     if (isAuth) {
-      return <SideBar toggleTheme={toggleTheme}/>;
+      return <Sidebar toggleTheme={toggleTheme}/>;
     }
     return <NavBar toggleTheme={toggleTheme}/>;
   }
