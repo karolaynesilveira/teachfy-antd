@@ -28,18 +28,20 @@ const LoginForm: React.FC<Props> = ({ setIsAuth }) => {
       <Form>
         <LogoName style={{ maxWidth: '60%' }} />
         <input
+          className='form-control'
           type="email"
           placeholder="E-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+          className='form-control'
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button onClick={handleLogin}>Entrar</Button>
+        <Button className='btn w-100' onClick={handleLogin}>Entrar</Button>
         <TextMuted>
           Não tem uma conta? <a href="/signup">Cadastre-se</a>
         </TextMuted>

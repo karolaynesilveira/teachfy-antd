@@ -34,6 +34,9 @@ export default createGlobalStyle`
           -webkit-box-shadow: 0 0 0px 1000px ${props => props.theme.colors.background} inset!important;
           transition: background-color 5000s ease-in-out 0s;
         }
+        &::placeholder {
+            color: ${props => props.theme.colors.text}!important;
+        }
     }
 
     .btn-teachfy {
