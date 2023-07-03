@@ -16,7 +16,8 @@ const MyDecksForm: React.FC = () => {
 
   const fetchDecks = async (userId: number) => {
     try {
-      const response = await getMyDecks(userId);
+      const response = await getMyDecks();
+      console.log(response);
       setDecks(response);
     } catch (error) {
       console.error('Erro ao buscar os decks:', error);

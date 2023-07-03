@@ -35,8 +35,9 @@ export default function AppRoutes() {
       <Fragment>
         <Menu isAuth={isAuth} toggleTheme={toggleTheme} />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          {/* <Route path="/" element={<HomePage />} /> */}
           {/* <Route path="/about" element={<About />} /> */}
+          <Route path="/" element={<CommunityPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage isAuth={isAuth} setIsAuth={setIsAuth} />} />
           <Route path="/community" element={<CommunityPage />} />

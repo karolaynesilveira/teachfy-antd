@@ -2,17 +2,6 @@ import { axios } from "../libs/axios";
 import { Card } from "../models/interfaces/Card";
 import { CardType } from "../models/types/CardType";
 
-export const getPublicDecks = async () => {
-  try {
-    const response = await axios.get(`/decks`);
-    return response.data;
-  } catch (error) {
-    console.error('Erro ao buscar os decks públicos:', error);
-    throw error;
-  }
-};
-
-
 export const newDeckAnki = async (data: {
   folder_id: number;
   name: string;
@@ -45,7 +34,7 @@ export const newDeckAnki = async (data: {
 };
 
 
-export const newDeckAvaliativo= async (data: {
+export const newDeckAvaliativo= async (data: { // PRECISA AJUSTAR ESSA FUNÇÃO, NÃO TÁ SALVANDO O DECK
   folder_id: number;
   name: string;
   ispublic: number;
@@ -78,10 +67,10 @@ export const newDeckAvaliativo= async (data: {
   }
 };
 
-export const getMyDecks = async (userId: number) => {
+export const getMyDecks = async () => {
   try {
-    const response = await axios.get(`/decks/mydecks/${userId}`, {});
-    const decks = response.data.data;
+    const response = await axios.get(`/decks`);
+    const decks = response.data;
     return decks;
   } catch (error) {
     console.error('Erro ao buscar os decks do usuário:', error);
