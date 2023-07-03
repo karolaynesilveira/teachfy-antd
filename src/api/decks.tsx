@@ -16,7 +16,7 @@ export const newDeckAnki = async (data: {
       formData.append('folder.id', String(data.folder_id));
     }
     formData.append('name', data.name);
-    formData.append('publico', String(data.ispublic));
+    formData.append('public', String(data.ispublic));
     formData.append('clonable', String(data.clonable));
     formData.append('feedback', String(0));
     formData.append('type', String(data.type));

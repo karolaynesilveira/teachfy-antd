@@ -41,8 +41,8 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
       user_id: parseInt(userStorage ? userStorage : '0'),
       folder_id: directory ? directory : 0,
       name: newTitle,
-      ispublic: isPublic ? 1 : 0,
-      clonable: isCloneable ? 1 : 0,
+      ispublic: newPublic ? 1 : 0,
+      clonable: newCloneable ? 1 : 0,
       type: 2,
       cards: cards,
     };
@@ -111,14 +111,6 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
     handleUpdateCard(id, 'answer', e.target.value);
   };
 
-  const handlePublicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPublic(e.target.checked);
-  };
-
-  const handleCloneableChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCloneable(e.target.checked);
-  };
-
   const handleCreateModal = () => {
     setModalIsOpen(true);
   };
@@ -164,6 +156,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
     }
   };
 
+  console.log(newPublic);
   return (
     <div>
       <h2>Novo deck de flashcard</h2>
@@ -186,14 +179,14 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
           type="checkbox"
           id="newPublic"
           checked={newPublic}
-          onChange={handlePublicChange}
+          onChange={(e) => setPublic(e.target.checked)}
         />
         <label htmlFor="newPublic">Deck público</label>
         <input
           type="checkbox"
           id="newCloneable"
           checked={newCloneable}
-          onChange={handleCloneableChange}
+          onChange={(e) => setCloneable(e.target.checked)}
         />
         <label htmlFor="newCloneable">Permite duplicação</label>
         <button type="button" onClick={handleCreateModal}>
