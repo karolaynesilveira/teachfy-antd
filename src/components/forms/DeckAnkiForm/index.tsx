@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { Card } from '../../../models/interfaces/Card';
-import { getDecksByAI, newDeck } from '../../../api/decks';
+import { getDecksByAI, newDeckAnki } from '../../../api/decks';
 import { FaMagic } from 'react-icons/fa';
 import Modal from 'react-modal';
 import { CardType } from '../../../models/types/CardType';
+import { useNavigate } from 'react-router-dom';
 
 interface DeckAnkiProps {
   title: string;
@@ -31,6 +32,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalDescription, setModalDescription] = useState('');
   const [modalQuantity, setModalQuantity] = useState(0);
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -48,7 +50,6 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
   };
 
   const saveDeck = async (deckData: {
-    user_id: number;
     folder_id: number;
     name: string;
     ispublic: number;
@@ -57,9 +58,10 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
     cards: Card[];
   }) => {
     try {
-      const result = await newDeck(deckData);
+      const result = await newDeckAnki(deckData);
       if (result === 'success') {
         alert('Novo deck gerado com sucesso!');
+        navigate('/my-decks');
       }
     } catch (error) {
       alert(error);
@@ -68,7 +70,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
 
   const handleAddCard = () => {
     const nextCardNumber = cards.length + 1;
-    const newCard: Card = { id: nextCardNumber, type: 3, question: '', answer: '' };
+    const newCard: Card = { id: nextCardNumber, type: 2, question: '', answer: '' };
     setCards([...cards, newCard]);
   };
 
@@ -141,7 +143,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
     try {
       const data = {
         description: modalDescription,
-        type: 3 as CardType,
+        type: 2 as CardType,
         quantity: modalQuantity,
       };
   
@@ -150,7 +152,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
       let nextCardId = cards.length; // Próximo ID disponível para os novos cards
       const newCards = response.data.map((item: { question: string; answer: string }) => ({
         id: nextCardId++,
-        type: 3 as CardType,
+        type: 2 as CardType,
         question: item.question,
         answer: item.answer,
       }));

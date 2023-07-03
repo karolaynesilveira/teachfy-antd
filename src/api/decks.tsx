@@ -13,12 +13,11 @@ export const getPublicDecks = async () => {
 };
 
 
-export const newDeck = async (data: {
+export const newDeckAnki = async (data: {
   folder_id: number;
   name: string;
   ispublic: number;
   clonable: number;
-  feedback?: number;
   type: number;
   cards: Card[];
 }) => {
@@ -32,21 +31,45 @@ export const newDeck = async (data: {
     formData.append('clonable', String(data.clonable));
     formData.append('feedback', String(0));
     formData.append('type', String(data.type));
-    for (let card of data.cards) {
-      formData.append('cards[].type', String(card.type));
-      formData.append('cards[].question', card.question);
-      formData.append('cards[].answer', card.answer!);
+    for(let index in data.cards) {
+      formData.append(`cards[${index}].type`, String(data.cards[index].type));
+      formData.append(`cards[${index}].question`, data.cards[index].question);
+      formData.append(`cards[${index}].answer`, data.cards[index].answer!);
+    }
 
-      if (card.options) {
-        for (let option of card.options) {
-          formData.append('cards[].options[].description', option.description);
-          formData.append('cards[].options[].isCorrect', String(option.isCorrect));
-        }
-      }
+    await axios.post('decks', formData);
+    return 'success';
+  } catch (error) {
+    throw new Error('Erro ao criar deck: ' + error);
+  }
+};
+
+
+export const newDeckAvaliativo= async (data: {
+  folder_id: number;
+  name: string;
+  ispublic: number;
+  clonable: number;
+  type: number;
+  cards: Card[];
+}) => {
+  try {
+    const formData = new FormData();
+    if (data.folder_id) {
+      formData.append('folder.id', String(data.folder_id));
+    }
+    formData.append('name', data.name);
+    formData.append('publico', String(data.ispublic));
+    formData.append('clonable', String(data.clonable));
+    formData.append('feedback', String(0));
+    formData.append('type', String(data.type));
+    for(let index in data.cards) {
+      formData.append(`cards[${index}].type`, String(data.cards[index].type));
+      formData.append(`cards[${index}].question`, data.cards[index].question);
+      formData.append(`cards[${index}].answer`, data.cards[index].answer!);
     }
 
     const response = await axios.post('decks', formData);
-
     if (response.status === 200) {
       return 'success';
     }
@@ -54,7 +77,6 @@ export const newDeck = async (data: {
     throw new Error('Erro ao criar deck: ' + error);
   }
 };
-
 
 export const getMyDecks = async (userId: number) => {
   try {

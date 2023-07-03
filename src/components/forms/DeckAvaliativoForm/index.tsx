@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { FormWrapper } from './styles';
-import { newDeck } from '../../../api/decks';
+import { newDeckAvaliativo } from '../../../api/decks';
 import { CardType } from '../../../models/types/CardType';
 import { Question } from '../../../models/interfaces/Question';
 import { Option } from '../../../models/interfaces/Option';
@@ -52,7 +52,7 @@ export const DeckAvaliativoForm: React.FC<DeckAvaliativoFormProps> = () => {
     cards: Card[];
   }) => {
     try {
-      const result = await newDeck(deckData);
+      const result = await newDeckAvaliativo(deckData);
       if (result === 'success') {
         alert('Novo deck gerado com sucesso!');
       }
