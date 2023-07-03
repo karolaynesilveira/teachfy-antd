@@ -38,47 +38,59 @@ export const SignUpForm: React.FC = () => {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <div style={{alignItems:'left', width: '100%'}}>
-          <label htmlFor="name">Nome Completo</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
-          />
-          <label htmlFor="email">E-mail</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
-          />
-          <label htmlFor="password">Senha</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
-          />
-          <label htmlFor="password_confirmation">Confirmação de Senha</label>
-          <input
-            type="password"
-            id="password_confirmation"
-            name="password_confirmation"
-            value={password_confirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
-            style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
-            onBlur={validatePassword}
-          />
+        <div className="row" style={{alignItems:'left', width: '100%'}}>
+          <div className="col-12">
+            <label htmlFor="name" className='form-label'>Nome Completo</label>
+            <input
+              className='form-control'
+              type="text"
+              id="name"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
+            />
+          </div>
+          <div className="col-12">
+            <label htmlFor="email" className='form-label'>E-mail</label>
+            <input
+              className='form-control'
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
+            />
+          </div>
+          <div className="col-12">
+            <label htmlFor="password" className='form-label'>Senha</label>
+            <input
+              className='form-control'
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
+            />
+          </div>
+          <div className="col-12">
+            <label htmlFor="password_confirmation" className='form-label'>Confirmação de Senha</label>
+            <input
+              className='form-control'
+              type="password"
+              id="password_confirmation"
+              name="password_confirmation"
+              value={password_confirmation}
+              onChange={(e) => setPasswordConfirmation(e.target.value)}
+              style={{ marginTop: '0.5rem', marginBottom: '1rem' }}
+              onBlur={validatePassword}
+            />
+          </div>
         </div>
         {passwordError && <TextDanger>{passwordError}</TextDanger>}
-        <Button type="submit" disabled={isSubmitDisabled}>Cadastrar-se</Button>
+        <Button className="btn btn-teachfy w-100" type="submit" disabled={isSubmitDisabled}>Cadastrar-se</Button>
         <TextMuted>
           Já tem uma conta? <a href="/login">Faça login</a>
         </TextMuted>
