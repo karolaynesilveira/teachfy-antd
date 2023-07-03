@@ -71,7 +71,7 @@ export const getMyDecks = async (userId: number) => {
 
 export const getDecksByAI = async (data: {
   description: string;
-  type: number;
+  type: CardType;
   quantity: number;
 }) => {
   try {
@@ -82,9 +82,7 @@ export const getDecksByAI = async (data: {
       tp = 2; //tipo da pergunta usada no back
     }
     const response = await axios.get(`/ask/${data.quantity}/${data.description}/${tp}`, {});
-    const cards = response.data;
-
-    return cards;
+    return response;
   } catch (error) {
     console.error('Erro ao gerar decks:', error);
     throw error;

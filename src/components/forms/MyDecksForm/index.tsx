@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { BiBookReader, BiEdit } from 'react-icons/bi';
 import { getMyDecks } from '../../../api/decks';
+import { useNavigate } from 'react-router-dom';
+
 
 const MyDecksForm: React.FC = () => {
   const [decks, setDecks] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userStorage = localStorage.getItem('userId');
@@ -21,8 +24,7 @@ const MyDecksForm: React.FC = () => {
   };
 
   const handleStudyClick = (deckId: number) => {
-    //criar lógica para estudar o deck
-    console.log(`Estudar deck com ID: ${deckId}`);
+    navigate(`deck/anki/study/${deckId}`);
   };
 
   const handleEditClick = (deckId: number) => {

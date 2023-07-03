@@ -4,7 +4,7 @@ import { Card } from '../../../models/interfaces/Card';
 import { getDecksByAI, newDeck } from '../../../api/decks';
 import { FaMagic } from 'react-icons/fa';
 import Modal from 'react-modal';
-import { CardTypeTypeEnum } from '../../../models/enums/CardTypeEnum';
+import { CardType } from '../../../models/types/CardType';
 
 interface DeckAnkiProps {
   title: string;
@@ -141,12 +141,22 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
     try {
       const data = {
         description: modalDescription,
-        type: 3,
+        type: 3 as CardType,
         quantity: modalQuantity,
       };
   
-      const cards = await getDecksByAI(data);
-      setCards(cards);
+      const response = await getDecksByAI(data);
+
+      let nextCardId = cards.length; // Próximo ID disponível para os novos cards
+      const newCards = response.data.map((item: { question: string; answer: string }) => ({
+        id: nextCardId++,
+        type: 3 as CardType,
+        question: item.question,
+        answer: item.answer,
+      }));
+
+      setCards(newCards);
+      setModalIsOpen(false);
     } catch (error) {
       console.error('Erro ao gerar decks:', error);
     }
@@ -231,6 +241,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
             id="modalDescription"
             value={modalDescription}
             onChange={handleModalDescriptionChange}
+            required
           />
         </div>
         <div>
@@ -240,6 +251,8 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
             id="modalQuantity"
             value={modalQuantity}
             onChange={handleModalQuantityChange}
+            min="1"
+            max="20"
           />
         </div>
         <button type="button" onClick={handleCloseModal}>
