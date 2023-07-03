@@ -41,6 +41,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
       user_id: parseInt(userStorage ? userStorage : '0'),
       folder_id: directory ? directory : 0,
       name: newTitle,
+      description: newDescription,
       ispublic: newPublic ? 1 : 0,
       clonable: newCloneable ? 1 : 0,
       type: 2,
@@ -52,6 +53,7 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
   const saveDeck = async (deckData: {
     folder_id: number;
     name: string;
+    description: string;
     ispublic: number;
     clonable: number;
     type: number;

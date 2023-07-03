@@ -5,6 +5,7 @@ import { CardType } from "../models/types/CardType";
 export const newDeckAnki = async (data: {
   folder_id: number;
   name: string;
+  description: string;
   ispublic: number;
   clonable: number;
   type: number;
@@ -16,6 +17,7 @@ export const newDeckAnki = async (data: {
       formData.append('folder.id', String(data.folder_id));
     }
     formData.append('name', data.name);
+    formData.append('description', data.description);
     formData.append('public', String(data.ispublic));
     formData.append('clonable', String(data.clonable));
     formData.append('feedback', String(0));
@@ -78,6 +80,16 @@ export const getMyDecks = async () => {
   }
 };
 
+export const getDeckById = async (deckId: number) => {
+  try {
+    const response = await axios.get(`/decks/${deckId}`);
+    const decks = response.data;
+    return decks;
+  } catch (error) {
+    console.error('Erro ao buscar os decks do usuário:', error);
+    throw error;
+  }
+};
 
 
 export const getDecksByAI = async (data: {
