@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { Card } from '../../../models/interfaces/Card';
 import { getDecksByAI, newDeckAnki } from '../../../api/decks';
@@ -6,6 +6,8 @@ import { FaMagic } from 'react-icons/fa';
 import Modal from 'react-modal';
 import { CardType } from '../../../models/types/CardType';
 import { useNavigate } from 'react-router-dom';
+import { Container } from './styles';
+import { ThemeContext } from 'styled-components';
 
 interface DeckAnkiProps {
   title: string;
@@ -33,6 +35,9 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
   const [modalDescription, setModalDescription] = useState('');
   const [modalQuantity, setModalQuantity] = useState(0);
   const navigate = useNavigate();
+
+  const theme = useContext(ThemeContext);
+  const background = theme?.colors.background ? theme?.colors.background : '#fff';
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -160,80 +165,106 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
 
   console.log(newPublic);
   return (
-    <div>
+    <div style={{ padding: '3rem' }} className='content'>
       <h2>Novo deck de flashcard</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="title">Título</label>
-        <input
-          type="text"
-          id="title"
-          value={newTitle}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <label htmlFor="description">Descrição</label>
-        <input
-          type="text"
-          id="description"
-          value={newDescription}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <input
-          type="checkbox"
-          id="newPublic"
-          checked={newPublic}
-          onChange={(e) => setPublic(e.target.checked)}
-        />
-        <label htmlFor="newPublic">Deck público</label>
-        <input
-          type="checkbox"
-          id="newCloneable"
-          checked={newCloneable}
-          onChange={(e) => setCloneable(e.target.checked)}
-        />
-        <label htmlFor="newCloneable">Permite duplicação</label>
-        <button type="button" onClick={handleCreateModal}>
-          Crie para mim <FaMagic />
-        </button>
-        <button type="button" onClick={handleAddCard}>
-          Adicionar Card
-        </button>
-        <div>
+        <div className="row">
+          <div className="col-12 mb-3">
+            <label htmlFor="title" className='form-label'>Título</label>
+            <input
+              className='form-control'
+              type="text"
+              id="title"
+              value={newTitle}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="col-12 mb-3">
+            <label htmlFor="description" className='form-label'>Descrição</label>
+            <input
+              className='form-control'
+              type="text"
+              id="description"
+              value={newDescription}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="col-12 mb-3">
+            <div className="form-check">
+              <input
+                className='form-check-input'
+                type="checkbox"
+                id="newPublic"
+                checked={newPublic}
+                onChange={(e) => setPublic(e.target.checked)}
+              />
+              <label htmlFor="newPublic" className='form-check-label'>Deck público</label>
+            </div>
+            <div className="form-check">
+              <input
+                className='form-check-input'
+                type="checkbox"
+                id="newCloneable"
+                checked={newCloneable}
+                onChange={(e) => setCloneable(e.target.checked)}
+              />
+              <label htmlFor="newCloneable" className='form-check-label'>Permite duplicação</label>
+            </div>
+          </div>
+          <div className='col-12 mb-3 d-flex justify-content-end'>
+            <button type="button" className="btn btn-sm" onClick={handleCreateModal}>
+              Crie para mim <FaMagic />
+            </button>
+            <button type="button" className="btn btn-sm ms-2" onClick={handleAddCard}>
+              Adicionar Card
+            </button>
+          </div>
           {cards.map((card) => (
-            <div key={card.id}>
-              <h5>Card {card.id}</h5>
-              <button
-                type="button"
-                onClick={() => handleDeleteCard(card.id!)}
-              >
-                <BsTrash />
-              </button>
-              <div>
-                <label htmlFor={`frontText-${card.id}`}>Frente:</label>
-                <input
-                  type="text"
-                  id={`frontText-${card.id}`}
-                  value={card.question}
-                  onChange={(e) => handleFrontTextChange(card.id!, e)}
-                />
-                <label htmlFor={`backText-${card.id}`}>Verso:</label>
-                <input
-                  type="text"
-                  id={`backText-${card.id}`}
-                  value={card.answer}
-                  onChange={(e) => handleBackTextChange(card.id!, e)}
-                />
-              </div>
+            <div className="col-12 mb-3">
+              <Container key={card.id}>
+                <div className="d-flex justify-content-between">
+                  <h5>Card {card.id}</h5>
+                  <button className="btn btn-teachfy"
+                    type="button"
+                    onClick={() => handleDeleteCard(card.id!)}
+                  >
+                    <BsTrash />
+                  </button>
+                </div>
+                <div>
+                  <label htmlFor={`frontText-${card.id}`} className='form-label'>Frente:</label>
+                  <input
+                    className='form-control'
+                    type="text"
+                    id={`frontText-${card.id}`}
+                    value={card.question}
+                    onChange={(e) => handleFrontTextChange(card.id!, e)}
+                  />
+                  <label htmlFor={`backText-${card.id}`} className='form-label'>Verso:</label>
+                  <input
+                    className='form-control'
+                    type="text"
+                    id={`backText-${card.id}`}
+                    value={card.answer}
+                    onChange={(e) => handleBackTextChange(card.id!, e)}
+                  />
+                </div>
+              </Container>
             </div>
           ))}
+          <div className="col-12 mb-3 d-flex justify-content-end">
+            <button className="btn btn-teachfy" type="submit">Salvar</button>
+          </div>
         </div>
-        <button type="submit">Salvar</button>
       </form>
 
+      <div style={{ backgroundColor: background }}>
       <Modal isOpen={modalIsOpen} onRequestClose={handleCloseModal}>
         <h2>Crie para mim</h2>
         <div>
-          <label htmlFor="modalDescription">Descrição detalhada:</label>
+          <label htmlFor="modalDescription" className='form-label'>Descrição detalhada:</label>
           <input
+            className='form-control'
             type="text"
             id="modalDescription"
             value={modalDescription}
@@ -242,8 +273,9 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
           />
         </div>
         <div>
-          <label htmlFor="modalQuantity">Quantidade de cards:</label>
+          <label htmlFor="modalQuantity" className='form-label'>Quantidade de cards:</label>
           <input
+            className='form-control'
             type="number"
             id="modalQuantity"
             value={modalQuantity}
@@ -252,13 +284,17 @@ export const DeckAnkiForm: React.FC<DeckAnkiProps> = ({
             max="20"
           />
         </div>
-        <button type="button" onClick={handleCloseModal}>
-          Fechar
-        </button>
-        <button type="button" onClick={handleModalSubmit}>
-          Confirmar
-        </button>
+        <div className="d-flex justify-content-end mt-3">
+          <button type="button" className='btn' onClick={handleCloseModal}>
+            Fechar
+          </button>
+          <button type="button" className='btn ms-2' onClick={handleModalSubmit}>
+            Confirmar
+          </button>
+
+        </div>
       </Modal>
+      </div>
     </div>
   );
 };
