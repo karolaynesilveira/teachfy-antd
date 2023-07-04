@@ -7,6 +7,7 @@ export const createUser = async (user: User) => {
     const response = await axios.post(`/users`, user);
   
     storage.setToken(response.data.token);
+    storage.setUser(response.data.user);
     return response.data;
   } catch (error) {
     console.error('Erro ao incluir usuário:', error);
