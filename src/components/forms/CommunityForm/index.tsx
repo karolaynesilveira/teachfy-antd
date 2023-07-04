@@ -30,14 +30,17 @@ const CommunityForm: React.FC = () => {
       ))}
     </Container>*/
     <div>
-    <h2>Meus Decks</h2>
+    <h2>Comunidade</h2>
     {decks.map((deck: any) => (
-        <div key={deck.id}>
-          <h3>{deck.name}</h3>
-          <p>{deck.description}</p>
-          <p>{deck.cloneable === 1 ? 'Duplicável' : "Apenas visualização"}</p>
-          <p>{deck.type === 1 ? 'Flashcard' : "Avaliativo"}</p>
-        </div>
+        <div className="card card-teachfy" style={{ width: '12rem', margin: '1.5rem' }} key={deck.id}>
+            <div className="card-body">
+              <h3>{deck.name}</h3>
+              <p>{deck.description}</p>
+              <p>{deck.cloneable === 1 ? 'Duplicável' : "Apenas visualização"}</p>
+              <p>{deck.type === 1 ? 'Flashcard' : "Avaliativo"}</p>
+
+            </div>
+          </div>
     ))}
   </div>
   );

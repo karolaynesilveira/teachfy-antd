@@ -46,14 +46,18 @@ const MyDecksForm: React.FC = () => {
     <div>
       <h2>Meus Decks</h2>
       {decks.map((deck: any) => (
-          <div key={deck.id}>
+        <div className="card card-teachfy" style={{ width: '12rem', margin: '1.5rem' }} key={deck.id}>
+            <div className="card-body">
             <h3>{deck.name}</h3>
             <p>{deck.description}</p>
             <p>{deck.public === 1 ? 'Público' : "Privado"}</p>
             <p>{deck.type === 1 ? 'Avaliativo' : "Anki"}</p>
-            <button onClick={() => handleStudyClick(deck.id)}><BiBookReader/> Estudar</button>  
-            <button onClick={() => handleEditClick(deck.id)}><BiEdit/> Editar</button>
+            <div className="d-flex justify-content-end">
+              <button className="btn btn-sm" onClick={() => handleStudyClick(deck.id)}><BiBookReader/> Estudar</button>  
+              <button className="btn btn-sm" onClick={() => handleEditClick(deck.id)}><BiEdit/> Editar</button>
+            </div>
           </div>
+        </div>
       ))}
     </div>
   );
