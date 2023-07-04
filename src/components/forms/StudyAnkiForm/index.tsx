@@ -62,16 +62,22 @@ const StudyAnkiForm: React.FC = () => {
       <p>Descrição: {deck.description}</p>
       <p>Tipo: {deck.type === 1 ? 'Flashcard' : 'Avaliativo'}</p>
 
-      <h2>Card {currentCardIndex + 1}</h2>
-      <p>{showBackText ? currentCard.answer : currentCard.question}</p>
+      <div className="card card-teachfy mb-3 mx-5">
+        <div className="card-body">
+          <h2>Card {currentCardIndex + 1}</h2>
+          <p>{showBackText ? currentCard.answer : currentCard.question}</p>
+        </div>
+      </div>
 
-      {!showBackText ? (
-        <button onClick={handleShowBackText}>Verso</button>
-      ) : (
-        <button onClick={handleNextCard}>Próximo</button>
-      )}
+      <div className="d-flex justify-content-center">
+          {!showBackText ? (
+            <button className="btn btn-teachfy" onClick={handleShowBackText}>Verso</button>
+          ) : (
+            <button className="btn btn-teachfy ms-3" onClick={handleNextCard}>Próximo</button>
+          )}
 
-      <button onClick={handleRestart}>De novo</button>
+        <button className="btn btn-teachfy ms-3" onClick={handleRestart}>De novo</button>
+      </div>
     </div>
   );
 };
