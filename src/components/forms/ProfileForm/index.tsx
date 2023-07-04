@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/ProfilePage.css';
+// import '../../styles/ProfilePage.css';
 import Modal from 'react-modal';
 import { updateUser } from '../../../api/users';
 
