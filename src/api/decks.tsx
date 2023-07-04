@@ -34,6 +34,42 @@ export const newDeckAnki = async (data: {
     throw new Error('Erro ao criar deck: ' + error);
   }
 };
+export const updateDeck = async (deckId: number, updatedData: {
+  folder_id?: number;
+  name?: string;
+  ispublic?: number;
+  clonable?: number;
+  type?: number;
+  cards?: Card[];
+}) => {
+  try {
+    const formData = new FormData();
+    if (updatedData.folder_id) {
+      formData.append('folder.id', String(updatedData.folder_id));
+    }
+    if (updatedData.name) {
+      formData.append('name', updatedData.name);
+    }
+    if (updatedData.ispublic) {
+      formData.append('publico', String(updatedData.ispublic));
+    }
+    if (updatedData.clonable) {
+      formData.append('clonable', String(updatedData.clonable));
+    }
+    if (updatedData.type) {
+      formData.append('type', String(updatedData.type));
+    }
+    if (updatedData.cards) {
+      for (let index in updatedData.cards) {
+        formData.append(`cards[${index}].type`, String(updatedData.cards[index].type));
+        formData.append(`cards[${index}].question`, updatedData.cards[index].question);
+        formData.append(`cards[${index}].answer`, updatedData.cards[index].answer!);
+      }
+    }
+  } catch (error) {
+    throw new Error('Erro ao atualiza deck: ' + error);
+  }
+  };
 
 
 export const newDeckAvaliativo= async (data: { // PRECISA AJUSTAR ESSA FUNÇÃO, NÃO TÁ SALVANDO O DECK
