@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BiBookReader, BiEdit } from 'react-icons/bi';
 import { getMyDecks } from '../../../api/decks';
 import { useNavigate } from 'react-router-dom';
+import { Container } from './styles';
 
 interface Deck {
   id: number;
@@ -43,8 +44,9 @@ const MyDecksForm: React.FC = () => {
     console.log(`Editar deck com ID: ${deckId}`);
   };
   return (
-    <div className='d-flex'>
+    <div>
       <h2>Meus Decks</h2>
+      <Container className='content'>
       {decks.map((deck: any) => (
         <div className="card card-teachfy" style={{ width: '12rem', margin: '1.5rem' }} key={deck.id}>
             <div className="card-body">
@@ -59,6 +61,8 @@ const MyDecksForm: React.FC = () => {
           </div>
         </div>
       ))}
+      </Container>
+
     </div>
   );
 };
