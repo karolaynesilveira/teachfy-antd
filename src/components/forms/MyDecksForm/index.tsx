@@ -43,7 +43,7 @@ const MyDecksForm: React.FC = () => {
     console.log(`Editar deck com ID: ${deckId}`);
   };
   return (
-    <div>
+    <div className='d-flex'>
       <h2>Meus Decks</h2>
       {decks.map((deck: any) => (
         <div className="card card-teachfy" style={{ width: '12rem', margin: '1.5rem' }} key={deck.id}>

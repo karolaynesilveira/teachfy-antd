@@ -29,7 +29,7 @@ const CommunityForm: React.FC = () => {
         <Card key={deck.id} title={deck.name} subtitle={DeckTypeEnum[deck.type as keyof DeckType]} description={deck.description}/>
       ))}
     </Container>*/
-    <div>
+    <div className='d-flex'>
     <h2>Comunidade</h2>
     {decks.map((deck: any) => (
         <div className="card card-teachfy" style={{ width: '12rem', margin: '1.5rem' }} key={deck.id}>
