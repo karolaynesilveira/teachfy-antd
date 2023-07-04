@@ -70,13 +70,15 @@ const StudyAnkiForm: React.FC = () => {
       </div>
 
       <div className="d-flex justify-content-center">
+          <button className="btn btn-teachfy ms-3" onClick={handleRestart}>De novo</button>
+          
           {!showBackText ? (
             <button className="btn btn-teachfy" onClick={handleShowBackText}>Verso</button>
           ) : (
             <button className="btn btn-teachfy ms-3" onClick={handleNextCard}>Próximo</button>
           )}
 
-        <button className="btn btn-teachfy ms-3" onClick={handleRestart}>De novo</button>
+        
       </div>
     </div>
   );

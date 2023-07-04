@@ -10,6 +10,7 @@ export const sendLogin = async (email:string, password:string) => {
     });
 
     storage.setToken(response.data.token);
+    storage.setUser(response.data.user);
     return response.data;
 
   } catch (error) {
